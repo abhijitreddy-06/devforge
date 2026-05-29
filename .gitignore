@@ -5,7 +5,6 @@ __pycache__/
 .ruff_cache/
 .streamlit/
 .env
-.env.*
 repo/
 chroma_db/
 *.exe
