@@ -1,0 +1,78 @@
+DEVFORGE PROJECT REPORT
+
+Project Summary
+DevForge is a Python automation workspace that clones a GitHub repository, ingests C++ code into Chroma using Tree-sitter and Jina embeddings, and then runs a LangGraph-based read-only RAG loop with an LLM to search and inspect code.
+
+Primary Goals
+- Clone a repository from a GitHub URL.
+- Ingest all C++ source files into a local vector store.
+- Search the indexed codebase with semantic retrieval.
+- Read file line ranges for inspection.
+
+
+Main Runtime Flow
+1. The user opens the Streamlit app.
+2. The app first asks for the GitHub repository URL.
+3. The repo is cloned into the local repo folder.
+4. The ingestion tool parses all C++ files and stores chunks in Chroma.
+5. After ingestion succeeds, the app reads the Mistral API key from the environment and asks for a codebase question.
+6. The LangGraph agent searches the codebase, inspects file lines, and answers from the retrieved evidence.
+7. The loop ends when the agent has enough context to answer.
+
+Important Files
+- app.py: Streamlit entrypoint for the read-only RAG UI.
+- orchestrator.py: LangGraph workflow for search and file reads.
+- reterieval_tools.py: retrieval and file reading tools.
+- ingestion.py: Tree-sitter parsing and Chroma ingestion.
+- git_agent.py: Git clone tool.
+- README.md: project documentation.
+- .gitignore: ignores local runtime and build artifacts.
+
+Tool Breakdown
+- git_repo_clone_tool: clones a repo from a URL into repo/.
+- ingest_repo_tool: chunks and embeds C++ code into Chroma.
+- search_codebase: searches Chroma for relevant code chunks.
+- read_file_lines: reads a file by line range.
+
+
+Data Storage
+- repo/: local clone of the source repository.
+- chroma_db/: persistent Chroma database for code chunks and embeddings.
+
+Model And AI Setup
+- Embeddings model: jinaai/jina-embeddings-v2-base-code.
+- LLM: Mistral via langchain-mistralai.
+- The agent uses the model to decide when to search and read more context.
+
+Project Dependencies
+- chromadb
+- tree-sitter
+- tree-sitter-cpp
+- sentence-transformers
+- langchain
+- langgraph
+- langchain-mistralai
+- streamlit
+- torchvision
+
+Environment Requirements
+- Python 3.11
+- Poetry
+- Mistral API key
+
+Current Notes
+- The project is designed to run in a staged UI: ingest first, then ask questions.
+- repo/ and chroma_db/ are runtime folders and should be recreated from a clean start when needed.
+
+
+Usage
+Install dependencies:
+poetry install
+
+Run the UI:
+poetry run streamlit run app.py
+
+Maintenance Notes
+- Delete repo/ and chroma_db/ for a fresh rebuild.
+- Keep the API key in the UI or environment variables.
+- The ingest step currently scans all C++ files in repo/ each run.

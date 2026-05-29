@@ -1,0 +1,15 @@
+.venv/
+__pycache__/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.streamlit/
+.env
+.env.*
+repo/
+chroma_db/
+*.exe
+*.pyc
+*.pyo
+*.pyd
+report.txt

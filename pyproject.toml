@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "devforge"
+version = "0.1.0"
+description = "DevForge Python workspace"
+authors = ["GitHub Copilot <copilot@example.com>"]
+readme = "README.md"
+packages = [{ include = "devforge" }]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+chromadb = "*"
+tree-sitter = "*"
+langchain = "*"
+langgraph = "*"
+python-dotenv = "*"
+langchain-huggingface = "*"
+huggingface-hub = "*"
+google-genai = "*"
+tree-sitter-cpp = "^0.23.4"
+sentence-transformers = "^5.5.1"
+streamlit = "^1.57.0"
+torchvision = {markers = "python_version < \"3.14.1\"", version = "^0.27.0"}
+langchain-mistralai = "^1.1.4"
+
+[build-system]
+requires = ["poetry-core>=2.0.0"]
+build-backend = "poetry.core.masonry.api"
